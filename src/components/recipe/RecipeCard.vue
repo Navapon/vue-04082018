@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="card">
-      {{ recipe.id }}
-      <img class="card-img-top" :src="recipe.image" alt="Card image cap">
+      <img class="card-img-top" :src="recipe.image ? recipe.image : '/favicon.ico'" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ recipe.title }}</h5>
         <p class="card-text">{{ recipe.description }} </p>

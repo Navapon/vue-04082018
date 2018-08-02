@@ -28,7 +28,7 @@
       <section>
         <div class="row pt-3">
           <div class="col-sm-12 col-md-3 pt-4" v-for="recipe in filterList" :key="recipe.id" >
-            <RecipeList :recipe="recipe" @delete="deleteRecipe" ></RecipeList>
+            <RecipeCard :recipe="recipe" @delete="deleteRecipe" ></RecipeCard>
           </div>
         </div>
       </section>
@@ -37,13 +37,13 @@
 </template>
 <script>
 import PageHeader from '@/components/main-layout/PageHeader.vue'
-import RecipeList from '@/components/recipe/RecipeList'
+import RecipeCard from '@/components/recipe/RecipeCard'
 import RecipeForm from '@/components/recipe/RecipeForm'
 
 export default {
   components: {
     PageHeader,
-    RecipeList,
+    RecipeCard,
     RecipeForm
   },
   data () {
@@ -66,6 +66,20 @@ export default {
       return this.recipes.filter(recipe => {
         return recipe.title.toLowerCase().indexOf(this.search.toLowerCase()) > -1
       })
+    }
+  },
+  watch: {
+    recipes: {
+      handler () {
+        console.log('Recipe changed!')
+        localStorage.setItem('recipes', JSON.stringify(this.recipes))
+      },
+      deep: true
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('recipes')) {
+      this.recipes = JSON.parse(localStorage.getItem('recipes'))
     }
   },
   methods: {
